@@ -1,0 +1,125 @@
+function mongoSchemaGestaoParticipantes() {
+  const mongoose = require("mongoose");
+  var gestaoParticipantesSchema = new mongoose.Schema({
+    codigo: {
+      type: String,
+      require: true,
+    },
+    participante: {
+      type: String,
+      require: true,
+    },
+    codigoEvento: {
+      type: String,
+      require: true,
+    },
+    status: {
+      type: String,
+      require: true,
+    },
+    historico: [
+      {
+        data: {
+          type: String,
+          require: false,
+        },
+        tipo: {
+          type: String,
+          require: false,
+        },
+        comentario: {
+          type: String,
+          require: false,
+        },
+        origem: {
+          type: String,
+          require: false,
+        },
+      },
+    ],
+    aereo: [
+      {
+        statusEmissao: {
+          type: String,
+          require: false,
+        },
+        dataEmissao: {
+          type: String,
+          require: false,
+        },
+        dataRemissao: {
+          type: String,
+          require: false,
+        },
+        trechos: [
+          {
+            trecho: {
+              type: String,
+              require: false,
+            },
+            data: {
+              type: String,
+              require: false,
+            },
+            ciaArea: {
+              type: String,
+              require: false,
+            },
+            voo: {
+              type: String,
+              require: false,
+            },
+            origem: {
+              type: String,
+              require: false,
+            },
+            destino: {
+              type: String,
+              require: false,
+            },
+            horaSaida: {
+              type: String,
+              require: false,
+            },
+            horaChegada: {
+              type: String,
+              require: false,
+            },
+          },
+        ],
+      },
+    ],
+    transporte: [
+      {
+        data: {
+          type: String,
+          require: false,
+        },
+        origem: {
+          type: String,
+          require: false,
+        },
+        destino: {
+          type: String,
+          require: false,
+        },
+        horaSaida: {
+          type: String,
+          require: false,
+        },
+        horaChegada: {
+          type: String,
+          require: false,
+        },
+        tipo: {
+          type: String,
+          require: false,
+        },
+      },
+    ],
+  });
+  //Collection
+  return mongoose.model("gestaoParticipantes", gestaoParticipantesSchema);
+}
+
+module.exports = mongoSchemaGestaoParticipantes;

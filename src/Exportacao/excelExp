@@ -1,0 +1,101 @@
+const excelJS = require("exceljs");
+const workbook = new excelJS.Workbook();
+const crud = require("../crud.js");
+const gerarPlanilha = require("../Exportacao/geraPlanilha");
+const mongoose = require("mongoose");
+
+const excelExp = async (req, res) => {
+  const filter = req.body.filter;
+  const rota = req.body.table;
+  var modelo = mongoose.model(rota);
+  const schema = modelo.schema.obj;
+  const result = await crud(rota, filter, "find");
+  let exportar = [];
+  let keys = Object.keys(schema).filter((key) => !Array.isArray(schema[key]));
+  let subKeys = Object.keys(schema).filter((key) => Array.isArray(schema[key]));
+  let subKeys2 = [];
+  let questionario = [];
+
+  for(element of workbook._worksheets){
+    workbook.removeWorksheet(element);
+  }
+
+  // Gera planilhas com os arrays
+  for (table of subKeys) {
+    exportar = [];
+    // Importa os dados nos campos corretos, respeitando as colunas
+    for (resultDados of result) {
+      subKeys2 = Object.keys(schema[table][0]);
+      subKeys2.unshift("codigo");
+
+      //if (resultDados[table][0] != undefined) {
+      if(resultDados[table] != undefined && resultDados[table][0] != undefined){
+        // Loop para percorrer todos os registros do array
+        for (loop = 0; loop < Object.values(resultDados[table]).length; loop++) {
+          let dados = [];
+
+          // Loop para percorrer todos os campos do array
+          for (headers of subKeys2) {
+            if (resultDados[table][loop] != undefined && resultDados[table] != undefined) {
+             
+              // Trata o array dentro do array, convertendo com ponto e virgula a separação
+              if (Array.isArray(resultDados[table][loop][headers])) {
+                for (x = 0;x < Object.values(resultDados[table][loop][headers]).length; x++) {
+                  delete resultDados[table][loop][headers][x]._id
+                 
+                  dados[headers] = dados[headers] === undefined
+                    ? Object.values(resultDados[table][loop][headers][x]).join(";")
+                    : dados[headers] + ';' + Object.values(resultDados[table][loop][headers][x]).join(";")
+                    
+                    // Separa o questionário em uma nova aba
+                    if(headers == 'questionario'){
+                      let desQuestao = {}         
+                      desQuestao.codParticipante =  resultDados.codigo
+                      desQuestao.questao = Object.values(resultDados[table][loop][headers][x])[0]
+                      desQuestao.resposta = Object.values(resultDados[table][loop][headers][x])[1]
+                      questionario.push(desQuestao)
+                    }
+                }
+              } else {
+                dados[headers] = resultDados[table][loop][headers];
+              }
+            } else {
+              dados[headers] = "";
+            }
+          }
+
+          dados.codigo = resultDados.codigo;
+          exportar.push(dados);
+        }
+      }
+    }
+    gerarPlanilha(workbook, subKeys2, exportar, table);
+    
+    if(Object.keys(questionario).length > 0){
+      gerarPlanilha(workbook, ["Codigo Participante", "Questao", "Resposta"], questionario, 'questionário');
+      questionario = [];
+    }
+  }
+
+  exportar = [];
+
+  // Gera planilha principal
+  for (resultDados of result) {
+    let dados = [];
+    // Importa os dados nos campos corretos, respeitando as colunas
+    for (let headers of keys) {
+      if (resultDados[headers] != undefined) {
+        dados[headers] = resultDados[headers];
+      } else {
+        dados[headers] = "";
+      }
+    }
+    exportar.push(dados);
+  }
+  gerarPlanilha(workbook, keys, exportar, rota);
+
+  const data = await workbook.xlsx.writeBuffer(); // grava cloud temp
+
+  return data;
+};
+module.exports = excelExp;

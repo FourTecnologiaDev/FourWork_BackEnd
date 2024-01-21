@@ -1,0 +1,35 @@
+enviaEmailGoogle = () =>{
+
+    const nodemailer = require('nodemailer');
+
+    // Configurações do servidor de e-mail (use as configurações do seu provedor de e-mail)
+    const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com', // Servidor SMTP do seu provedor de e-mail
+    port: 587, // Porta do servidor SMTP (587 é uma porta comum para TLS)
+    secure: false, // true para 465, false para outras portas
+    auth: {
+      user: 'henriquenkt@gmail.com', // Seu endereço de e-mail
+      pass: 'fbuspnzecvxzhxji', // Sua senha de e-mail
+    }
+  });
+  
+  // Defina as opções do e-mail
+  const mailOptions = {
+    from: 'henriquenkt@gmail.com', // O endereço de e-mail do remetente
+    to: 'henriquenkt@gmail.com', // O endereço de e-mail do destinatário
+    subject: 'Teste de envio de e-mail usando Node.js', // O assunto do e-mail
+    text: 'Olá! Este é um e-mail de teste enviado através do Node.js.', // O corpo do e-mail (texto simples)
+    // Se quiser enviar um e-mail em formato HTML, use a propriedade 'html' em vez de 'text'.
+  };
+  
+  // Envie o e-mail
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Erro ao enviar o e-mail:', error);
+    } else {
+      console.log('E-mail enviado com sucesso! Detalhes:', info);
+    }
+  });
+  
+};
+module.exports = enviaEmailGoogle;

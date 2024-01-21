@@ -1,0 +1,16 @@
+{
+    "git.autofetch": true,
+    "[git-commit]": {
+        "editor.acceptSuggestionOnCommitCharacter": true
+    },
+    "git.allowNoVerifyCommit": true,
+    "git.enableSmartCommit": true,
+    "git.showCommitInput": true,
+    "git.useEditorAsCommitInput": false,
+    "github.gitAuthentication": false,
+    "git.alwaysShowStagedChangesResourceGroup": true,
+    "git.branchProtectionPrompt": "alwaysPrompt",
+    "git.confirmEmptyCommits": false,
+    "git.confirmNoVerifyCommit": true,
+    "git.confirmSync": false
+}

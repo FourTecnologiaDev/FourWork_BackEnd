@@ -1,0 +1,134 @@
+const axios = require("axios");
+
+//https://login.microsoftonline.com/common/adminconsent?redirect_uri=https://rsvp.fourtc.com.br/dashboard/cadastros/empresa&state=12345&client_id=61e9e9cd-d799-4adc-aea0-2555d650920f
+
+async function enviaEmailMicrosoft(body) {
+  const crud = require("../crud");
+  let send = {};
+  let sender = "";
+  let result = {"message": "",
+                "status": ""};
+
+  // Monta array de e-mails
+  for (const element of body) {
+    // Retorna e-mail cadastrado no evento
+    codigoEvento = { codigo: element.codigoEvento };
+    retorno = await crud("eventos", codigoEvento, "find");
+    try {
+      // Retorna logo para inserir no e-mail
+      const cartaConviteCodigo = { codigo: retorno[0].cartaConvite };
+      const cartaConvite = await crud(
+        "cartaConvite",
+        cartaConviteCodigo,
+        "find"
+      );
+      let base64data;
+      if (cartaConvite[0].assinatura) {
+        const base64ImageData = cartaConvite[0].assinatura.buffer;
+        base64data = base64ImageData.toString("base64");
+      }
+
+      if (retorno[0].emailEvento) sender = retorno[0].emailEvento;
+      // Retorna o dominio
+      const regex = /@(.+)/;
+      const match = sender.match(regex);
+      if (match) {
+        domain = match[1];
+        console.log("Domínio:", domain);
+      } else {
+        console.log("Endereço de e-mail inválido");
+      }
+
+      // Retorna o token
+      let access_token = await retornaToken(domain);
+
+      // Envia e-mail
+      // Percorre array de mensagens do evento
+      for (const element2 of element.messages) {
+        let assinatura = "";
+        if (base64data) {
+          element2.html += `<img id='Imagem_x0020_2' src='cid:assinatura.png' alt='Assinatura'>`;
+          assinatura = `,
+                  "attachments": [
+                    {
+                      "@odata.type": "#microsoft.graph.fileAttachment",
+                      "name": "assinatura.png",
+                      "contentType": "image/png",
+                      "contentBytes": "${base64data}",
+                      "isInline": true,
+                      "contentId": "assinatura.png"                 
+                    }
+                  ]`;
+        }
+        send = `{
+              "message": {
+                "subject": "${element2.subject}",
+                "body": {
+                  "contentType": "HTML",
+                  "content": "${element2.html}"
+                },
+                "toRecipients": [{
+                  "emailAddress": {
+                  "address": "${element2.email}"
+                  }
+                }]
+                ${assinatura}
+               }
+            }`;
+        const apiUrl2 = `https://graph.microsoft.com/v1.0//users/${sender}/sendMail`;
+        try {
+          const response = await axios.post(apiUrl2, send, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${access_token}`,
+            },
+          });
+          console.log("Resposta da API:", response.status);
+          result.message = `{Email : ${element2.email}, status: Enviado com sucesso.}`
+          result.status = 200;
+        } catch (error) {
+          console.error("Erro no procesamento:", error.message);
+          result.message = `{Email : ${element2.email}, status: ${error.message}`
+          result.status = 500;
+        }
+      }
+    } catch (error) {
+      result.message = (`Erro: ${error.message}`);
+      result.status = 500;
+      sender = "";
+    }
+  }
+
+  return result;
+}
+
+// Function Retorna token
+
+retornaToken = async (domain) => {
+  // Credenciais
+  const credencials = {
+    grant_type: "client_credentials",
+    client_id: "61e9e9cd-d799-4adc-aea0-2555d650920f",
+    scope: "https://graph.microsoft.com/.default",
+    client_secret: "PvY8Q~9r26WuK0wuFAv_rWEg7L_20G~hZGlYfaQm",
+  };
+
+  var apiUrl = `https://login.microsoftonline.com/${domain}/oauth2/v2.0/token`;
+  await axios
+    .post(apiUrl, credencials, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+    .then((response) => {
+      console.log("Resposta da API:", response.data);
+      access_token = response.data.access_token;
+    })
+    .catch((error) => {
+      console.error("Erro na solicitação:", error.message);
+      result = error.message;
+    });
+  return access_token;
+};
+
+module.exports = enviaEmailMicrosoft;

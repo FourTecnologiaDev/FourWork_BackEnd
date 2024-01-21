@@ -1,0 +1,16 @@
+git commit -m "first commit"
+
+-- se for novo
+heroku create -a rsvpbackend
+
+-- se ja existir
+heroku git:remote -a rsvpbackend
+
+git push heroku master
+
+
+vadva
+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
+
+
+
