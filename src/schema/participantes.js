@@ -123,6 +123,10 @@ function mongoSchemaParticipantes() {
           type: String,
           require: false,
         },
+        usuario: {
+          type: String,
+          require: false,
+        },
       },
     ],
     aereo: [
