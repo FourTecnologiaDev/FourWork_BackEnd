@@ -30,7 +30,7 @@ validator = async (tabela, arquivo) => {
       }
 
       // Validação do CPF
-      if (cpf <= 0 || cpf == undefined) {
+      if (cpf <= 0) {
         if (!cpfCheck.validate(cpf)) {
           retorno.registro.push("Linha " + (i+1).toString() + " CPF inválido.");
           valido = false;
@@ -38,7 +38,7 @@ validator = async (tabela, arquivo) => {
       }
 
       // Validação se já existe o CPF no evento
-      if(valido == true){
+      if(cpf != undefined){
         const participante = await crud("participantes", {"cpf": cpf, "codigoEvento": codigoEvento}, "find");
         if(Object.keys(participante).length > 0){
         retorno.registro.push("Linha " + (i+1).toString() + " Participante já cadastrado para esse evento.");
@@ -48,7 +48,7 @@ validator = async (tabela, arquivo) => {
       }
 
       // Verifica se está validado e caso não esteja retira o registro
-      if (valido) {
+      if (valido) { 
         let codigo = await crud(tabela, "", "lastCode");
         arquivo[i].codigo = codigo[0].codigo + i + 1;
         exportar.push(arquivo[i])
