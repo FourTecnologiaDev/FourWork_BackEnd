@@ -10,7 +10,7 @@ router.post('/ticket', async (req, res) => {
     await newTicket.save(); // Salve o novo ticket no banco de dados
 
     // Executar a função crud
-    const retorno = await crud("tabela", req.body, "ticket");
+    retorno = await crud("tabela", req.body, "ticket");
 
     res.status(201).json(newTicket); // Responda com o ticket criado e um status 201 (Created)
   } catch (error) {
