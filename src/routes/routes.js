@@ -65,7 +65,7 @@ router.route('/extratorWord').all(authenticateToken, extratorWord)
 router.route('/sendWhats').post(authenticateToken, sendWhats)
 router.route('/sendTemplate').post(authenticateToken, sendTemplate)
 router.route('/exportarPDF').post(authenticateToken, exportarPdf)
-router.route('/ticket').post(ticket)
+router.route('/ticket').post(authenticateToken, ticket)
 
 router.use(express.json())
 
