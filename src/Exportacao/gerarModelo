@@ -1,7 +1,6 @@
 const excelJS = require("exceljs");
 const workbook = new excelJS.Workbook();
 const gerarPlanilha = require("../Exportacao/geraPlanilha");
-const worksheets = require("./geraPlanilha");
 const mongoose = require("mongoose");
 
 const gerarModelo = async (req, res) => {
@@ -11,14 +10,16 @@ const gerarModelo = async (req, res) => {
   }
 
   const rota = req.body.table;  
-  let table;
-  table = rota == 'aereo' || rota == 'transporte' || rota == 'hotel' ? 'participantes' : rota
-  var modelo = mongoose.model(table);
-  let schema = modelo.schema.obj;
+  let table = "";
+  let schema = {};
 
-  schema = rota == 'aereo' ? schema.aereo[0] : schema
-  schema = rota == 'transporte' ? schema.transporte[0] : schema
-  schema = rota == 'hotel' ? schema.hotel[0] : schema
+  table = rota == 'aereo' || rota == 'transporte' || rota == 'hotel' ? 'participantes' : rota;
+  var modelo = mongoose.model(table);
+  schema = modelo.schema.obj;
+
+  schema = rota == 'aereo' ? schema.aereo[0] : schema;
+  schema = rota == 'transporte' ? schema.transporte[0] : schema;
+  schema = rota == 'hotel' ? schema.hotel[0] : schema;
 
   if(rota == 'participantes'){
     delete schema.aereo

@@ -93,6 +93,10 @@ function mongoSchemaParticipantes() {
       type: String,
       require: true,
     },
+    statusInfo: {
+      type: String,
+      require: true,
+    },
     historico: [
       {
         data: {
