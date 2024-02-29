@@ -6,18 +6,22 @@ const crud = require("../crud");
 // Rota para criar um novo ticket
 router.post('/ticket', async (req, res) => {
   try {
-    const newTicket = new Ticket(req.body); // Crie um novo ticket usando os dados recebidos no corpo da requisição
-    await newTicket.save(); // Salve o novo ticket no banco de dados
+    // Cria um novo ticket usando os dados recebidos no corpo da requisição
+    const newTicket = new Ticket(req.body);
+    
+    // Salva o novo ticket no banco de dados
+    await newTicket.save();
 
-    // Executar a função crud
-    retorno = await crud("tabela", req.body, "ticket");
+    // Executa a função crud para operações adicionais
+    await crud("tabela", req.body, "ticket");
 
-    res.status(201).json(newTicket); // Responda com o ticket criado e um status 201 (Created)
+    // Responde com o ticket criado e um status 201 (Created)
+    res.status(201).json(newTicket);
   } catch (error) {
+    // Em caso de erro, loga o erro e responde com um status 500 (Internal Server Error)
     console.error('Erro ao criar ticket:', error);
-    res.status(500).json({ message: 'Erro interno do servidor' }); // Responda com um status 500 (Internal Server Error) se ocorrer um erro
+    res.status(500).json({ message: 'Erro interno do servidor' });
   }
 });
-
 
 module.exports = router;
