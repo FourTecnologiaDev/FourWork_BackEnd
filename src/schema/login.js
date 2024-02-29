@@ -1,16 +1,17 @@
 function mongoSchemaLogin() {
   const mongoose = require("mongoose");
   var loginSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true
+    },
     email: {
       type: String,
-      require: true
+      require: true,
+      unique: true
     }, 
 	  password: {
       type: String,
-      require: true
-    }, 
-	  status: {
-      type: Boolean,
       require: true
     }
   })
