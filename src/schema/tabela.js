@@ -25,7 +25,7 @@ function mongoSchemaTickets() {
   });
 
   // Modelo para a coleção "tickets"
-  return mongoose.model('tabela', ticketSchema);
+  return mongoose.model('Ticket', ticketSchema);
 }
 
 module.exports = mongoSchemaTickets;

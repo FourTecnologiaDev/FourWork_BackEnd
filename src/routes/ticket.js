@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Ticket = require('../schema/tabela'); // Importe o modelo de ticket
-const crud = require("../crud");
+const Ticket = require('../models/Ticket'); // Importe o modelo de ticket
 
 // Rota para criar um novo ticket
 router.post('/ticket', async (req, res) => {
   try {
     const newTicket = new Ticket(req.body); // Crie um novo ticket usando os dados recebidos no corpo da requisição
     await newTicket.save(); // Salve o novo ticket no banco de dados
-
-    // Executar a função crud
-    retorno = await crud("tabela", req.body, "ticket");
-
     res.status(201).json(newTicket); // Responda com o ticket criado e um status 201 (Created)
   } catch (error) {
     console.error('Erro ao criar ticket:', error);
@@ -19,5 +14,6 @@ router.post('/ticket', async (req, res) => {
   }
 });
 
+// Rotas para outras operações CRUD (ler todos os tickets, atualizar um ticket, excluir um ticket), conforme necessário
 
 module.exports = router;
