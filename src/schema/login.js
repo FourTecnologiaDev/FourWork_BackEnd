@@ -5,10 +5,6 @@ function mongoSchemaLogin() {
       type: String,
       required: true
     },
-    empresa: {
-      type: String,
-      required: true
-    },
     email: {
       type: String,
       require: true,
@@ -16,10 +12,6 @@ function mongoSchemaLogin() {
     }, 
 	  password: {
       type: String,
-      require: true
-    }, 
-	  status: {
-      type: Boolean,
       require: true
     }
   })
