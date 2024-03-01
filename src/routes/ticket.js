@@ -18,5 +18,14 @@ router.
         res.status(500).json({retorno: `Algo deu errado!, erro: ${err}`}).end();
       }
     })
+    .get(`/ticket`, async function (req, res) {
+      try{
+        retorno = await crud('tabela', {}, 'find');
+        res.json(retorno).end();
+      }
+      catch(err){
+        res.status(500).json({retorno: `Algo deu errado!, erro: ${err}`}).end();
+      }
+    })
 
 module.exports = router;
