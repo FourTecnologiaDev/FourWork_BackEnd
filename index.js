@@ -18,7 +18,9 @@ const mongoSchemaRobo = require("./src/schema/roboWhats");
 const mongoSchemaDadosCadastraisParticipantes = require("./src/schema/dadosCadastraisParticipantes");
 const mongoSchemaTickets = require("./src/schema/tabela")
 
+
 require("dotenv").config();  
+
 
 mongoSchemaClientes();
 mongoSchemaEmpresas();

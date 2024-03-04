@@ -20,6 +20,8 @@ const sendWhats = require('./sendWhats')
 const sendTemplate = require('./sendWhatsTemplate')
 const exportarPdf = require('./exportarPDF')
 const ticket = require('./ticket')
+const enviarEmailSuporte = require('./enviarEmail')
+
 
 router.use(bodyParser.json());
 
@@ -66,6 +68,7 @@ router.route('/sendWhats').post(authenticateToken, sendWhats)
 router.route('/sendTemplate').post(authenticateToken, sendTemplate)
 router.route('/exportarPDF').post(authenticateToken, exportarPdf)
 router.route('/ticket').all(authenticateToken, ticket)
+router.route('/enviarEmail').post(authenticateToken, enviarEmailSuporte)
 
 router.use(express.json())
 

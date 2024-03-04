@@ -8,15 +8,12 @@ function mongoSchemaTickets() {
     },
     email: {
       type: String,
-      required: true
     }, 
     sistema: {
       type: String,
-      required: true
     }, 
     question: {
       type: String,
-      required: true
     }
   });
 
