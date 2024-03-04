@@ -59,7 +59,7 @@ enviaEmailSuporte = (modalData) => {
             </head>
             <body>
                 <div class="container">
-                    <h1>Suporte Four - Pedido de Assistência ${modalData.codigo}</h1>
+                    <h1>Suporte Four - Pedido de Assistência ${modalData.codigo} 🍀</h1>
                     <p>Prezado(a) equipe de suporte,</p>
                     <div class="data">
                         <p><strong>Email:</strong> ${modalData.email}</p>
