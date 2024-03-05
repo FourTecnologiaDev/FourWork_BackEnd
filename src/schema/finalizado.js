@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-function mongoSchemaTickets() {
+function mongoSchemaFinalizados() {
   const ticketSchema = new mongoose.Schema({
     codigo: {
       type: Number,
@@ -17,8 +17,8 @@ function mongoSchemaTickets() {
     }
   });
 
-  // Modelo para a coleção "tickets"
-  return mongoose.model('tabela', ticketSchema);
+  // Modelo para a coleção "finalizados"
+  return mongoose.model('finalizado', ticketSchema);
 }
 
-module.exports = mongoSchemaTickets;
+module.exports = mongoSchemaFinalizados;

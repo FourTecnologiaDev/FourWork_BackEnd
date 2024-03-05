@@ -21,6 +21,9 @@ const sendWhats = require('./sendWhats')
 const sendTemplate = require('./sendWhatsTemplate')
 const exportarPdf = require('./exportarPDF')
 const ticket = require('./ticket')
+const enviarEmailSuporte = require('./enviarEmail')
+const finalizado = require('./finalizados')
+const remover = require('./ticket')
 
 router.use(bodyParser.json());
 
@@ -68,7 +71,9 @@ router.route('/extratorWord').all(authenticateToken, extratorWord)
 router.route('/sendWhats').post(authenticateToken, sendWhats)
 router.route('/sendTemplate').post(authenticateToken, sendTemplate)
 router.route('/exportarPDF').post(authenticateToken, exportarPdf)
-router.route('/ticket').post(authenticateToken, ticket)
+router.route('/ticket').all(authenticateToken, ticket)
+router.route('/enviarEmail').post(authenticateToken, enviarEmailSuporte)
+router.route('/finalizados').all(authenticateToken, finalizado)
 
 router.use(express.json())
 

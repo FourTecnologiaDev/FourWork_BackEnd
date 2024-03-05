@@ -18,8 +18,10 @@ const mongoSchemaDadosCadastrais = require("./src/schema/dadosCadastrais");
 const mongoSchemaRobo = require("./src/schema/roboWhats");
 const mongoSchemaDadosCadastraisParticipantes = require("./src/schema/dadosCadastraisParticipantes");
 const mongoSchemaTickets = require("./src/schema/tabela")
+const mongoSchemaFinalizados = require ("./src/schema/finalizado")
 
 require("dotenv").config();  
+
 
 mongoSchemaClientes();
 mongoSchemaEmpresas();
@@ -36,6 +38,7 @@ mongoSchemaDadosCadastrais();
 mongoSchemaRobo();
 mongoSchemaDadosCadastraisParticipantes();
 mongoSchemaTickets();
+mongoSchemaFinalizados();
 
 app.use(express.static('src'));
 app.use(cors()); 
