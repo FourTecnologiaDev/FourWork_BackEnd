@@ -27,5 +27,24 @@ router.
         res.status(500).json({retorno: `Algo deu errado!, erro: ${err}`}).end();
       }
     })
-
-module.exports = router;
+    .delete('/ticket/:id', async function (req, res) {
+      const ticketId = req.params.id;
+  
+      try {
+        // Encontre o ticket pelo ID e remova-o da tabela, mas não exclua do banco de dados
+        const ticket = await Ticket.findByIdAndRemove(ticketId);
+  
+        // Se o ticket não for encontrado, retorne um erro 404
+        if (!ticket) {
+          return res.status(404).json({ error: 'Ticket não encontrado' });
+        }
+  
+        // Responda com uma mensagem de sucesso
+        res.json({ message: 'Ticket removido da tabela com sucesso' });
+      } catch (err) {
+        // Se ocorrer um erro, retorne um erro 500 com detalhes do erro
+        res.status(500).json({ error: `Erro ao remover o ticket da tabela: ${err.message}` });
+      }
+    });
+  
+  module.exports = router;
