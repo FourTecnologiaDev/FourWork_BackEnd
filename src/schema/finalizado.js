@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 function mongoSchemaFinalizados() {
   const ticketSchema = new mongoose.Schema({
-    
     codigo: {
       type: Number,
       required: true

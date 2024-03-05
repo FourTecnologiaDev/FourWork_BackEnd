@@ -66,8 +66,6 @@ enviaEmailSuporte = (modalData) => {
                         <p><strong>Sistema:</strong> ${modalData.sistema}</p>
                         <p><strong>Pergunta:</strong> ${modalData.question}</p>
                     </div>
-                    <p>Atenciosamente,</p>
-                    <p>Seu Nome 🍀</p>
                 </div>
             </body>
             </html>` // O corpo do e-mail com os dados do modal em formato HTML
