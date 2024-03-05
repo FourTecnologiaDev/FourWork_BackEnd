@@ -97,6 +97,10 @@ function mongoSchemaParticipantes() {
       type: String,
       require: true,
     },
+    confirmado: {
+      type: String,
+      require: true,
+    },
     historico: [
       {
         data: {
