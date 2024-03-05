@@ -71,7 +71,6 @@ router.route('/exportarPDF').post(authenticateToken, exportarPdf)
 router.route('/ticket').all(authenticateToken, ticket)
 router.route('/enviarEmail').post(authenticateToken, enviarEmailSuporte)
 router.route('/finalizados').all(authenticateToken, finalizado)
-router.route('/ticket/:id').delete(authenticateToken, remover)
 
 router.use(express.json())
 

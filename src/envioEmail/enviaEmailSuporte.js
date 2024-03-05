@@ -7,8 +7,8 @@ enviaEmailSuporte = (modalData) => {
     port: 587, // Porta do servidor SMTP (587 é uma porta comum para TLS)
     secure: false, // true para 465, false para outras portas
     auth: {
-      user: 'henriquenkt@gmail.com', // Seu endereço de e-mail
-      pass: 'fbuspnzecvxzhxji', // Sua senha de e-mail
+      user: 'pedrooofreitas@gmail.com', // Seu endereço de e-mail
+      pass: 'phjanpquvtebitta', // Sua senha de e-mail
     }
   });
 
