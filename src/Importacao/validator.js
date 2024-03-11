@@ -2,15 +2,13 @@ validator = async (tabela, arquivo) => {
   const cpfCheck = require("cpf-check");
 
   let exportar = [];
-  let linha = 0;
-  let cpf = 0
   let retorno = {
     registro: [],
     arquivo: {},
   };
 
   // valida importação da tabela participantes, verifica se existe o evento associado
-  if ((tabela = "participantes")) {
+  if ((tabela == "participantes")) {
     const eventos = await crud("eventos", {}, "find");
 
     for (i = 0; Object.keys(arquivo).length > i; i++) {
@@ -20,7 +18,7 @@ validator = async (tabela, arquivo) => {
 
       // Validação do evento
       if (arquivo[i].codigoEvento) {
-        codigoEvento = arquivo[i].codigoEvento;  
+        codigoEvento = arquivo[i].codigoEvento;
 
         if (!eventos.find((map) => map.codigo == codigoEvento)) {
           retorno.registro.push("Linha " + (i+1).toString() + " Codigo do evento não encontrado."

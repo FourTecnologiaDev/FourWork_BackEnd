@@ -44,7 +44,7 @@ async function gerarPDF(req, res) {
     const hours = originalDate.getHours().toString().padStart(2, "0");
     const minutes = originalDate.getMinutes().toString().padStart(2, "0");
 
-    return `${day}/${month}/${year} ${hours - 3}:${minutes}`;
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
   // Busca as informações do evento
