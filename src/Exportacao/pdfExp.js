@@ -97,7 +97,7 @@ async function gerarPDF(req, res) {
       .fontSize(11)
       .text(
         `Log gerado em ${formatarDataCabeçalho(
-          new Date().toString()
+          new Date()
         )}, versão 1.0`,
         {
           align: "right",
@@ -132,7 +132,7 @@ async function gerarPDF(req, res) {
     .fontSize(11)
     .text(
       `Log gerado em ${formatarDataCabeçalho(
-        new Date().toString()
+        new Date()
       )}, versão 1.0`,
       {
         align: "right",
