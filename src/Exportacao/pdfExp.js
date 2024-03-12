@@ -2,7 +2,7 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
 const crud = require("../crud");
-const moment = require('moment');
+const moment = require("moment");
 
 async function gerarPDF(req, res) {
   const doc = new PDFDocument({ size: "A4", bufferPages: true });
@@ -35,14 +35,26 @@ async function gerarPDF(req, res) {
 
   // Função para formatar a data do cabeçalho
   function formatarDataCabeçalho() {
-    // Definindo o idioma para português brasileiro
-    moment.locale("pt-br");
-    
-    // Obtendo a data atual
-    const momentDate = moment();
-    
-    // Formatando a data e hora
-    return momentDate.format('LLL');
+    const data = new Date();
+
+    console.log(
+      data.toLocaleString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+      })
+    );
+
+    return data.toLocaleString("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+    })
+
+    // // Definindo o idioma para português brasileiro
+    // moment.locale("pt-br");
+
+    // // Obtendo a data atual
+    // const momentDate = moment();
+
+    // // Formatando a data e hora
+    // return momentDate.format("LLL");
   }
 
   // Busca as informações do evento
@@ -93,13 +105,10 @@ async function gerarPDF(req, res) {
     doc
       .font("Helvetica")
       .fontSize(11)
-      .text(
-        `Log gerado em ${formatarDataCabeçalho()}, versão 1.0`,
-        {
-          align: "right",
-          width: 480,
-        }
-      );
+      .text(`Log gerado em ${formatarDataCabeçalho()}, versão 1.0`, {
+        align: "right",
+        width: 480,
+      });
 
     // Adiciona uma linha separadora entre cabeçalho e conteúdo
     doc.lineWidth(1).moveTo(50, doc.y).lineTo(550, doc.y).stroke();
@@ -126,15 +135,10 @@ async function gerarPDF(req, res) {
   doc
     .font("Helvetica")
     .fontSize(11)
-    .text(
-      `Log gerado em ${formatarDataCabeçalho(
-        new Date()
-      )}, versão 1.0`,
-      {
-        align: "right",
-        width: 480,
-      }
-    );
+    .text(`Log gerado em ${formatarDataCabeçalho(new Date())}, versão 1.0`, {
+      align: "right",
+      width: 480,
+    });
 
   // Adiciona uma linha separadora entre cabeçalho e conteúdo
   doc.lineWidth(1).moveTo(50, doc.y).lineTo(550, doc.y).stroke();
