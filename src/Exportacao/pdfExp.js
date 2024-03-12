@@ -2,7 +2,6 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const path = require("path");
 const crud = require("../crud");
-const moment = require("moment");
 
 async function gerarPDF(req, res) {
   const doc = new PDFDocument({ size: "A4", bufferPages: true });
@@ -34,27 +33,17 @@ async function gerarPDF(req, res) {
   }
 
   // Função para formatar a data do cabeçalho
-  function formatarDataCabeçalho() {
-    const data = new Date();
+  function formatarDataCabeçalho(data) {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZone: 'America/Sao_Paulo'
+    };
 
-    console.log(
-      data.toLocaleString("pt-BR", {
-        timeZone: "America/Sao_Paulo",
-      })
-    );
-
-    return data.toLocaleString("pt-BR", {
-      timeZone: "America/Sao_Paulo",
-    })
-
-    // // Definindo o idioma para português brasileiro
-    // moment.locale("pt-br");
-
-    // // Obtendo a data atual
-    // const momentDate = moment();
-
-    // // Formatando a data e hora
-    // return momentDate.format("LLL");
+    return data.toLocaleString("pt-BR", options)
   }
 
   // Busca as informações do evento
@@ -105,7 +94,7 @@ async function gerarPDF(req, res) {
     doc
       .font("Helvetica")
       .fontSize(11)
-      .text(`Log gerado em ${formatarDataCabeçalho()}, versão 1.0`, {
+      .text(`Log gerado em ${formatarDataCabeçalho(new Date())}, versão 1.0`, {
         align: "right",
         width: 480,
       });
