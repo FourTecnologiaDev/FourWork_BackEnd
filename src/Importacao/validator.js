@@ -48,7 +48,7 @@ validator = async (tabela, arquivo) => {
       // Verifica se está validado e caso não esteja retira o registro
       if (valido) { 
         let codigo = await crud(tabela, "", "lastCode");
-        arquivo[i].codigo = codigo[0].codigo + i + 1;
+        arquivo[i].codigo = codigo.length > 0 ? codigo[0].codigo + i + 1 : 1;
         exportar.push(arquivo[i])
       }
     //   } else {
