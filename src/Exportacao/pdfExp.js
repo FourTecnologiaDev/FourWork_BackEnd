@@ -25,7 +25,7 @@ async function gerarPDF(req, res) {
   }
 
   //Função para formatar data
-  function formatDate(date) {
+  function formatarData(date) {
     const parts = date.split("-");
     if (parts.length === 3) {
       return `${parts[2]}/${parts[1]}/${parts[0]}`;
@@ -33,11 +33,11 @@ async function gerarPDF(req, res) {
   }
 
   // Função para formatar a data do cabeçalho
-  function formatDateHeader(date) {
-    const dateStringWithoutGMT = date.replace("GMT-0300", "").trim();
+  function formatarDataCabeçalho(date) {
+    // Convertendo para a hora local (Brasília)
+    const originalDate = new Date(date);
 
-    const originalDate = new Date(dateStringWithoutGMT);
-
+    // Obtendo data e hora local
     const day = originalDate.getDate().toString().padStart(2, "0");
     const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
     const year = originalDate.getFullYear();
@@ -96,7 +96,9 @@ async function gerarPDF(req, res) {
       .font("Helvetica")
       .fontSize(11)
       .text(
-        `Log gerado em ${formatDateHeader(new Date().toString())}, versão 1.0`,
+        `Log gerado em ${formatarDataCabeçalho(
+          new Date().toString()
+        )}, versão 1.0`,
         {
           align: "right",
           width: 480,
@@ -129,7 +131,9 @@ async function gerarPDF(req, res) {
     .font("Helvetica")
     .fontSize(11)
     .text(
-      `Log gerado em ${formatDateHeader(new Date().toString())}, versão 1.0`,
+      `Log gerado em ${formatarDataCabeçalho(
+        new Date().toString()
+      )}, versão 1.0`,
       {
         align: "right",
         width: 480,
@@ -183,10 +187,14 @@ async function gerarPDF(req, res) {
         continued: true,
       })
       .font("Helvetica")
-      .text(`${formatDate(event.dataEntrada)} - ${formatDate(event.dataSaida)}`)
+      .text(
+        `${formatarData(event.dataEntrada)} - ${formatarData(event.dataSaida)}`
+      )
       .moveDown(0.5);
     calcularNumLinhas(
-      `Data: ${formatDate(event.dataEntrada)} - ${formatDate(event.dataSaida)}`
+      `Data: ${formatarData(event.dataEntrada)} - ${formatarData(
+        event.dataSaida
+      )}`
     );
   });
 
