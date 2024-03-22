@@ -22,7 +22,7 @@ const exportarPdf = require('./exportarPDF')
 const ticket = require('./ticket')
 const enviarEmailSuporte = require('./enviarEmail')
 const finalizado = require('./finalizados')
-const remover = require('./ticket')
+const gestaoatv = require('./GestaoAtv')
 
 router.use(bodyParser.json());
 
@@ -71,6 +71,7 @@ router.route('/exportarPDF').post(authenticateToken, exportarPdf)
 router.route('/ticket').all(authenticateToken, ticket)
 router.route('/enviarEmail').post(authenticateToken, enviarEmailSuporte)
 router.route('/finalizados').all(authenticateToken, finalizado)
+router.route('/gestaoatv').all(authenticateToken, gestaoatv)
 
 router.use(express.json())
 

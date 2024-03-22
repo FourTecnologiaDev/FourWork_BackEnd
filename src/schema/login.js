@@ -13,7 +13,7 @@ function mongoSchemaLogin() {
 	  password: {
       type: String,
       require: true
-    }
+    },
   })
   //Collection
   return mongoose.model('login', loginSchema);
