@@ -3,103 +3,115 @@ function mongoSchemaEventos() {
   var eventosSchema = new mongoose.Schema({
     codigo: {
       type: BigInt,
-      require: true 
+      require: true,
     },
     nome: {
       type: String,
-      require: true
+      require: true,
     },
-    clientes: [{
+    clientes: [
+      {
         codigo: {
-            type: BigInt,
-            require: true
-        }
-    }],
-	  cep: {
+          type: BigInt,
+          require: true,
+        },
+      },
+    ],
+    cep: {
       type: String,
-      require: true
-    }, 
-	  endereco: {
-      type: String,
-      require: true
-    }, 
-	  numero: {
-      type: String,
-      require: true
-    }, 
-	  endereco2: {
-      type: String,
-      require: true
+      require: true,
     },
-      solicitante: {
+    endereco: {
       type: String,
-      require: true
+      require: true,
+    },
+    numero: {
+      type: String,
+      require: true,
+    },
+    endereco2: {
+      type: String,
+      require: true,
+    },
+    solicitante: {
+      type: String,
+      require: true,
     },
     dataSaida: {
       type: String,
-      require: true
+      require: true,
     },
     dataEntrada: {
       type: String,
-      require: true
+      require: true,
     },
     numeroParticipantes: {
       type: BigInt,
-      require: true
+      require: true,
     },
     tipoEvento: {
       type: String,
-      require: true
+      require: true,
     },
     statusEvento: {
       type: String,
-      require: true
+      require: true,
+    },
+    confirmacaoEvento: {
+      type: Boolean,
+      require: true,
     },
     nacional: {
       type: String,
-      require: true
-    }, 
+      require: true,
+    },
     observacao1: {
       type: String,
-      require: true
-    }, 
+      require: true,
+    },
     observacao2: {
       type: String,
-      require: true
-    }, 
+      require: true,
+    },
     observacao3: {
       type: String,
-      require: true
-    }, 
+      require: true,
+    },
     cartaConvite: {
       type: String,
-      require: true
-    },    
+      require: true,
+    },
+    cartaInformativa: {
+      type: String,
+      require: true,
+    },
     dadosCadastrais: {
       type: String,
-      require: true
-    },    
+      require: true,
+    },
     questionario: {
       type: String,
-      require: true
+      require: true,
     },
     emailEvento: {
       type: String,
-      require: true
+      require: true,
     },
     emailCC: {
       type: String,
-      require: true
+      require: true,
     },
-    servicos: [{
-      servico:{
-        type: String,
-        require: false
-      }
-    }],
-  })
+    servicos: [
+      {
+        servico: {
+          type: String,
+          require: false,
+        },
+      },
+    ],
+  });
   //Collection
-  return mongoose.model('eventos', eventosSchema);
+  return mongoose.model("eventos", eventosSchema);
 }
 
 module.exports = mongoSchemaEventos;

@@ -2,7 +2,7 @@ const axios = require("axios");
 
 //https://login.microsoftonline.com/common/adminconsent?redirect_uri=https://rsvp.fourtc.com.br/dashboard/cadastros/empresa&state=12345&client_id=61e9e9cd-d799-4adc-aea0-2555d650920f
 
-async function enviaEmailMicrosoft(body) {
+async function enviaEmailMicrosoft(body, type = "") {
   const crud = require("../crud");
   let send = {};
   let sender = "";
@@ -16,15 +16,15 @@ async function enviaEmailMicrosoft(body) {
     retorno = await crud("eventos", codigoEvento, "find");
     try {
       // Retorna logo para inserir no e-mail
-      const cartaConviteCodigo = { codigo: retorno[0].cartaConvite };
-      const cartaConvite = await crud(
-        "cartaConvite",
-        cartaConviteCodigo,
+      const cartaCodigo = { codigo: type == "Carta convite" ? retorno[0].cartaConvite : retorno[0].cartaInformativa };
+      const carta = await crud(
+        type == "Carta convite" ? "cartaConvite" : "cartaInformativa",
+        cartaCodigo,
         "find"
       );
       let base64data;
-      if (cartaConvite[0].assinatura) {
-        const base64ImageData = cartaConvite[0].assinatura.buffer;
+      if (carta[0].assinatura) {
+        const base64ImageData = carta[0].assinatura.buffer;
         base64data = base64ImageData.toString("base64");
       }
 
@@ -75,6 +75,7 @@ async function enviaEmailMicrosoft(body) {
                 ${assinatura}
                }
             }`;
+
         const apiUrl2 = `https://graph.microsoft.com/v1.0//users/${sender}/sendMail`;
         try {
           const response = await axios.post(apiUrl2, send, {

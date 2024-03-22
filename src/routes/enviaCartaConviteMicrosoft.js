@@ -6,7 +6,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.text({ type: '*/*' }));
 router.post(`/enviarCartaConviteMicrosoft`, async function (req, res) {
   try{
-    const retEmail = await enviarEmailMicrosoft(req.body);        
+    const retEmail = await enviarEmailMicrosoft(req.body.emails, req.body.tipo);        
     res.status(retEmail.status).send(retEmail.message).end();
 
   }
