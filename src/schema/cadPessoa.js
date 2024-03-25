@@ -6,11 +6,15 @@ function mongoSchemaCadastroPessoa() {
       type: Number,
       required: true
     },
+    fornecedor: {
+      type: Number,
+      required: true
+    },
     CNPJ: {
-      type: String,
+      type: Number,
     }, 
     CPF: {
-      type: String,
+      type: Number,
     }, 
     Nome: {
       type: String,
@@ -22,25 +26,25 @@ function mongoSchemaCadastroPessoa() {
       type: String,
     }, 
     CEP: {
-      type: String,
+      type: Number,
     }, 
     Endereço: {
       type: String,
     }, 
     Numero: {
-      type: String,
+      type: Number,
     },
     Telefone: {
       type: String,
     },
     ValorH: {
-      type: String,
+      type: Number,
     },
     HorasT: {
-      type: String,
+      type: Number,
     },
     ValorAdc: {
-      type: String,
+      type: Number,
     },
     Data: {
       type: String,
