@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 let CadastroPessoa;
 
 // Verifica se o modelo já foi definido antes de tentar defini-lo novamente
-function mongoSchemaCadastroPessoa() {
+function mongoSchemaCadastro() {
   if (!CadastroPessoa) {
     const cadastroSchema = new mongoose.Schema({
       codigo: {
@@ -57,10 +57,10 @@ function mongoSchemaCadastroPessoa() {
     });
 
     // Define the model with the correct name
-    CadastroPessoa = mongoose.model('cadPessoa', cadastroSchema);
+    CadastroPessoa = mongoose.model('cadastroPessoa', cadastroSchema);
   }
 
   return CadastroPessoa;
 }
 
-module.exports = mongoSchemaCadastroPessoa;
+module.exports = mongoSchemaCadastro;

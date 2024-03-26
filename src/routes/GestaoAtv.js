@@ -8,9 +8,9 @@ router.use(cors());
 
 router.post(`/gestaoatv`, async function (req, res) {
   try {
-    const retorno = await crud('cadPessoa', req.body, 'lastCode');
+    const retorno = await crud('cadastroPessoa', req.body, 'lastCode');
 
-    await crud('cadPessoa', req.body, 'insert');
+    await crud('cadastroPessoa', req.body, 'insert');
     res.json({ resultado: "Inserido com sucesso." }).end();
   } catch (err) {
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
@@ -19,7 +19,7 @@ router.post(`/gestaoatv`, async function (req, res) {
 
 .get(`/gestaoatv`, async function (req, res) {
   try {
-    const retorno = await crud('cadPessoa', {}, 'find');
+    const retorno = await crud('cadastroPessoa', {}, 'find');
     res.json(retorno).end();
   } catch (err) {
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
