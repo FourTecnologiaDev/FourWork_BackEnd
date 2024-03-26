@@ -13,11 +13,21 @@ function mongoSchemaCadastro() {
         type: Number,
       },
       CNPJ: {
-        type: Number,
-      }, 
+        type: String,
+        required: true,
+        // Adicione uma função de set para remover caracteres não numéricos
+        set: function(value) {
+          return value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        }
+      },
       CPF: {
-        type: Number,
-      }, 
+        type: String,
+        required: true,
+        // Adicione uma função de set para remover caracteres não numéricos
+        set: function(value) {
+          return value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        }
+      },
       nomePessoa: {
         type: String,
       }, 
