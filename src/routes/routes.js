@@ -25,6 +25,8 @@ const enviarEmailSuporte = require('./enviarEmail')
 const finalizado = require('./finalizados')
 const gestaoatv = require('./GestaoAtv')
 const authorizedUsers = require('./authorizedUser')
+const cadastroRAT = require('./RAT')
+const nextCode = require('./nextCode')
 
 router.use(bodyParser.json());
 
@@ -76,7 +78,10 @@ router.route('/ticket').all(authenticateToken, ticket)
 router.route('/enviarEmail').post(authenticateToken, enviarEmailSuporte)
 router.route('/finalizados').all(authenticateToken, finalizado)
 router.route('/gestaoatv').all(authenticateToken, gestaoatv)
+router.route('/gestaoatv/:id').delete(authenticateToken, gestaoatv)
 router.route('/authorizedUsers').all(authenticateToken, authorizedUsers)
+router.route('/rats').all(authenticateToken, cadastroRAT)
+router.route('/nextCode').get(authenticateToken, nextCode)
 
 router.use(express.json())
 

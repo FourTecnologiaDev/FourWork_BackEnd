@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-// Lista de usuários autorizados
-const authorizedUsers = ['pedro.freitas@fourtc.com.br'];
 
 // Rota para fornecer a lista de usuários autorizados
-router.get('/authorizedUsers', (req, res) => {
-  res.json(authorizedUsers);
+router.post('/authorizedUsers', (req, res) => {
+  console.log(req.body)
+  if (req.body.email.includes('@fourtec.com.br')) {
+    res.json({
+      isAuth: true
+    })
+  } else {
+    res.json({
+      isAuth: false
+    })
+  }
 });
 
 module.exports = router;

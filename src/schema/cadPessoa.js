@@ -7,6 +7,9 @@ function mongoSchemaCadastro() {
   if (!CadastroPessoa) {
     const cadastroSchema = new mongoose.Schema({
       codigo: {
+        type: String,
+      },
+      digito: {
         type: Number,
       },
       fornecedor: {
@@ -66,6 +69,11 @@ function mongoSchemaCadastro() {
       },
     });
 
+    // Adicione um campo virtual para combinar codigo e codigoDigitos
+    cadastroSchema.virtual('codigoCompleto').get(function() {
+      return this.codigo + this.digito;
+    });
+    
     // Define the model with the correct name
     CadastroPessoa = mongoose.model('cadastroPessoa', cadastroSchema);
   }

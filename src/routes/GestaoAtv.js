@@ -1,40 +1,66 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const CadastroPessoa = require('../schema/cadPessoa')(); // Importe o modelo e chame a função para obter o modelo
+const CadastroPessoa = require('../schema/cadPessoa')(); 
 const crud = require("../crud");
+const authenticateToken = require('../authenticate/authenticateToken')
 
-// Configuração do middleware CORS
 const corsOptions = {
-  origin: 'http://localhost:5173', // Substitua pelo domínio da sua aplicação
+  origin: 'http://localhost:5173',
 };
 
-// Use o middleware CORS com as opções configuradas
+
 router.use(cors(corsOptions));
 
-// Rota para lidar com solicitações POST
+
 router.post(`/gestaoatv`, async function (req, res) {
   try {
-    // Execute as operações necessárias para processar a solicitação POST
-    const retorno = await crud('cadastroPessoa', req.body, 'lastCode');
-    await crud('cadastroPessoa', req.body, 'insert');
+    console.log('Recebendo dados do formulário:', req.body);
+
+    const { codigo, ...outrosDados } = req.body;
+    
+    console.log('Dados a serem inseridos no banco de dados:', { ...outrosDados, codigo });
+
+    const retorno = await crud('cadastroPessoa', { ...outrosDados, codigo }, 'lastCode');
+    console.log('Último código inserido:', retorno);
+
+    await crud('cadastroPessoa', { ...outrosDados, codigo }, 'insert');
+    console.log('Dados inseridos com sucesso.');
+
     res.json({ resultado: "Inserido com sucesso." }).end();
   } catch (err) {
-    // Lidar com erros e enviar uma resposta adequada
+    console.error('Erro ao inserir dados no banco de dados:', err);
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
 
-// Rota para lidar com solicitações GET
+
 router.get(`/gestaoatv`, async function (req, res) {
   try {
-    // Execute as operações necessárias para processar a solicitação GET
+
     const retorno = await crud('cadastroPessoa', {}, 'find');
     res.json(retorno).end();
   } catch (err) {
-    // Lidar com erros e enviar uma resposta adequada
+
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
+
+router.delete('/gestaoatv/:id', authenticateToken, async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log('Recebido DELETE em /gestaoatv com ID:', id);
+    
+    // Chame a função crud passando o nome do modelo, os dados e o tipo de operação
+    const retorno = await crud('cadastroPessoa', { _id: id }, 'delete');
+
+    console.log('Item excluído com sucesso:', retorno);
+    res.json({ resultado: "Item excluído com sucesso." });
+  } catch (err) {
+    console.error('Erro ao excluir item:', err);
+    res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` });
+  }
+});
+
 
 module.exports = router;
