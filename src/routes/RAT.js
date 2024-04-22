@@ -18,7 +18,7 @@ const upload = multer({ storage });
 // Rota para lidar com solicitações POST
 router.post(`/rats`, upload.single('Anexo'), async function (req, res) {
   try {
-    const { Ratsenior, Stats, Data, ratcod, seniorcod } = req.body; // Aqui é onde o erro ocorre
+    const { Ratsenior, Stats, Data, Ratcod, Seniorcod } = req.body; // Aqui é onde o erro ocorre
     
     // Extrair os dados binários e o tipo de conteúdo do arquivo enviado
     const Anexo = {
@@ -28,8 +28,8 @@ router.post(`/rats`, upload.single('Anexo'), async function (req, res) {
 
     // Criar uma nova instância do modelo CadastroRAT com os dados do formulário
     const novoCadastro = new mongoSchemaCadastro({
-      ratcod, // Aqui está corrigido
-      seniorcod, // Aqui está corrigido
+      Ratcod, 
+      Seniorcod,
       Ratsenior,
       Stats,
       Anexo,
@@ -38,18 +38,18 @@ router.post(`/rats`, upload.single('Anexo'), async function (req, res) {
 
     // Salvar o novo cadastro no banco de dados
     await novoCadastro.save();
-    
+    const retorno = await crud('CadRAT', {}, 'find');
     // Responder ao cliente com uma mensagem de sucesso
-    res.json({ resultado: "Inserido com sucesso." }).end();
+    res.json({ retorno: "Inserido com sucesso." }).end();
   } catch (err) {
     // Lidar com erros e responder ao cliente com uma mensagem de erro
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
 
-router.get(`/rats/anexo/:id`, async function (req, res) {
+router.post(`/ratsdowloadpdf`, async function (req, res) {
   try {
-    const id = req.params.id;
+    const id = req.body._id;
     const cadastro = await mongoSchemaCadastro.findById(id);
 
     if (!cadastro) {
@@ -57,18 +57,19 @@ router.get(`/rats/anexo/:id`, async function (req, res) {
     }
 
     res.set('Content-Type', cadastro.Anexo.contentType);
-    res.set('Content-Disposition', `attachment; filename=${cadastro.Anexo.filename}`);
+    res.set('Content-Disposition', `attachment; filename=teste`);
     res.send(cadastro.Anexo.data);
   } catch (err) {
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
 
+
 // Rota para lidar com solicitações GET
 router.get(`/rats`, async function (req, res) {
   try {
     // Executar as operações necessárias para processar a solicitação GET
-    const retorno = await crud('cadastroRAT', {}, 'find');
+    const retorno = await crud('CadRAT', {}, 'find');
     res.json(retorno).end();
   } catch (err) {
     // Lidar com erros e responder ao cliente com uma mensagem de erro

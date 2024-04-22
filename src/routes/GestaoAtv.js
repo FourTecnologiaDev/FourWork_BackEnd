@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const CadastroPessoa = require('../schema/cadPessoa')(); 
+const CadastroApontamento = require('../schema/cadApont')(); 
 const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 
@@ -21,10 +21,10 @@ router.post(`/gestaoatv`, async function (req, res) {
     
     console.log('Dados a serem inseridos no banco de dados:', { ...outrosDados, codigo });
 
-    const retorno = await crud('cadastroPessoa', { ...outrosDados, codigo }, 'lastCode');
+    const retorno = await crud('CadastroApontamento', { ...outrosDados, codigo }, 'lastCode');
     console.log('Último código inserido:', retorno);
 
-    await crud('cadastroPessoa', { ...outrosDados, codigo }, 'insert');
+    await crud('CadastroApontamento', { ...outrosDados, codigo }, 'insert');
     console.log('Dados inseridos com sucesso.');
 
     res.json({ resultado: "Inserido com sucesso." }).end();
@@ -38,7 +38,7 @@ router.post(`/gestaoatv`, async function (req, res) {
 router.get(`/gestaoatv`, async function (req, res) {
   try {
 
-    const retorno = await crud('cadastroPessoa', {}, 'find');
+    const retorno = await crud('CadastroApontamento', {}, 'find');
     res.json(retorno).end();
   } catch (err) {
 
@@ -52,7 +52,7 @@ router.delete('/gestaoatv/:id', authenticateToken, async (req, res) => {
     console.log('Recebido DELETE em /gestaoatv com ID:', id);
     
     // Chame a função crud passando o nome do modelo, os dados e o tipo de operação
-    const retorno = await crud('cadastroPessoa', { _id: id }, 'delete');
+    const retorno = await crud('CadastroApontamento', { _id: id }, 'delete');
 
     console.log('Item excluído com sucesso:', retorno);
     res.json({ resultado: "Item excluído com sucesso." });

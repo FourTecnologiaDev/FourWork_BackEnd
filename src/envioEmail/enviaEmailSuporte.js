@@ -8,7 +8,7 @@ enviaEmailSuporte = (modalData) => {
     secure: false, // true para 465, false para outras portas
     auth: {
       user: 'pedrooofreitas@gmail.com', // Seu endereço de e-mail
-      pass: 'phja npqu vteb itta', // Sua senha de e-mail
+      pass: 'nvge aqpo gein rxgu', // Sua senha de e-mail
     }
   });
 

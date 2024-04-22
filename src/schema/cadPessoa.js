@@ -1,84 +1,56 @@
 const mongoose = require("mongoose");
 
-let CadastroPessoa;
+let CadastroP;
 
 // Verifica se o modelo já foi definido antes de tentar defini-lo novamente
-function mongoSchemaCadastro() {
-  if (!CadastroPessoa) {
+function mongoSchemaCadastroP() {
+  if (!CadastroP) {
     const cadastroSchema = new mongoose.Schema({
       codigo: {
         type: String,
       },
-      digito: {
-        type: Number,
+      Nome: {
+        type: String, // Corrigindo para String
       },
-      fornecedor: {
-        type: Number,
+      Email: {
+        type: String, // Corrigindo para String
       },
+      Senha: {
+        type: String,
+      },     
       CNPJ: {
         type: String,
         required: true,
-        // Adicione uma função de set para remover caracteres não numéricos
-        set: function(value) {
-          return value.replace(/\D/g, ''); // Remove caracteres não numéricos
-        }
       },
       CPF: {
         type: String,
         required: true,
-        // Adicione uma função de set para remover caracteres não numéricos
-        set: function(value) {
-          return value.replace(/\D/g, ''); // Remove caracteres não numéricos
-        }
-      },
-      nomePessoa: {
+      }, 
+      ValorH: {
         type: String,
       }, 
-      Email: {
-        type: String,
-      }, 
-      tipoPessoa: {
+      TipoPessoa: {
         type: String,
       }, 
       CEP: {
-        type: String,
-      }, 
+        type: String, // Corrigindo para String
+      },
       Endereço: {
         type: String,
-      }, 
-      Número: {
-        type: Number,
       },
-      Telefone: {
+      Numero: {
         type: String,
       },
-      ValorH: {
-        type: Number,
-      },
-      HorasT: {
-        type: Number,
-      },
-      ValorAdc: {
-        type: Number,
-      },
-      Data: {
+      telefone: {
         type: String,
       },
-      diasUteis: {
-        type: String,
-      },
-    });
-
-    // Adicione um campo virtual para combinar codigo e codigoDigitos
-    cadastroSchema.virtual('codigoCompleto').get(function() {
-      return this.codigo + this.digito;
     });
     
-    // Define the model with the correct name
-    CadastroPessoa = mongoose.model('cadastroPessoa', cadastroSchema);
+    // Define o modelo com o nome correto
+    CadastroP = mongoose.model('cadastrousuario', cadastroSchema);
   }
 
-  return CadastroPessoa;
+  return CadastroP;
 }
 
-module.exports = mongoSchemaCadastro;
+module.exports = mongoSchemaCadastroP;

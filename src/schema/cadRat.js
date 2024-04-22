@@ -5,15 +5,15 @@ let CadastroRAT;
 function mongoSchemaCadastro() {
   if (!CadastroRAT) {
     const cadastroSchema = new mongoose.Schema({
-      ratcod: {
+      Ratcod: {
         type: Number,
-        required: false
+        required: true
       },
       Ratsenior: {
         type: String,
-        required: false
+        required: true
       },
-      seniorcod: {
+      Seniorcod: {
         type: Number,
         required: false
       }, 
@@ -31,7 +31,7 @@ function mongoSchemaCadastro() {
       },
     });
 
-    CadastroRAT = mongoose.model('cadastroRAT', cadastroSchema);
+    CadastroRAT = mongoose.model('CadRAT', cadastroSchema);
   }
 
   return CadastroRAT;
