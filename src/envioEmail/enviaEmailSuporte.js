@@ -8,14 +8,14 @@ enviaEmailSuporte = (modalData) => {
     secure: false, // true para 465, false para outras portas
     auth: {
       user: 'pedrooofreitas@gmail.com', // Seu endereço de e-mail
-      pass: 'nvge aqpo gein rxgu', // Sua senha de e-mail
+      pass: 'aruz kwsf ckiy pqcl', // Sua senha de e-mail
     }
   });
 
   // Conteúdo do e-mail com base nos dados do modal
   const mailOptions = {
-    from: 'pedrotortoriello4s@gmail.com', // O endereço de e-mail do remetente
-    to: 'pedrooofreitas@gmail.com', // O endereço de e-mail do destinatário
+    from: 'pedrooofreitas@gmail.com', // O endereço de e-mail do remetente
+    to: 'pedro.freitas@fourtec.com.br', // O endereço de e-mail do destinatário
     subject: 'Suporte Four', // O assunto do e-mail
     html: `<!DOCTYPE html>
             <html lang="pt-br">
