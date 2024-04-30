@@ -29,11 +29,10 @@ const cadastroRAT = require('./RAT')
 const nextCode = require('./nextCode')
 const cadPessoa = require('./CadastroPessoa')
 const suporteNovo = require ('./novoUsuario')
-const suporteLogin = require ('./autenticacaoSu')
+
 
 router.use(bodyParser.json());
 
-router.route('/autenticacaoSu').post(suporteLogin)
 router.route('/novoSuporte').post(suporteNovo)
 router.route('/autenticacao').post(autenticacao)
 router.route('/novoUsuario').post(authenticateToken, novoUsuario)
@@ -90,6 +89,7 @@ router.route('/ratsdowloadpdf').post(authenticateToken, cadastroRAT)
 router.route('/nextCode').get(authenticateToken, nextCode)
 router.route('/cadPessoa').all(authenticateToken, cadPessoa)
 router.route('/cadPessoa/:tipoPessoa').get(authenticateToken, cadPessoa)
+router.route('/gestaoatv/:codigoRAT').get(authenticateToken, gestaoatv)
 
 
 router.use(express.json())

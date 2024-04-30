@@ -9,19 +9,24 @@ function mongoSchemaCadastro() {
       codigo: {
         type: String,
       },
-      cliente: {
+      codigoCliente: {
         type: Number,
       },
       RAT: {
-        type: Number,
+        type: String,
+        unique: true,
       },
       nomePessoa: {
         type: String,
-        required: true
+      },     
+      Email: {
+        type: String,
+      },     
+      nomeCliente: {
+        type: String,
       },     
       tipoPessoa: {
-        type: String,
-        required: true,
+        type: String, 
       },
       ValorH: {
         type: String,
@@ -33,9 +38,9 @@ function mongoSchemaCadastro() {
         type: String,
       }, 
       Data: {
-        type: Number,
+        type: Date, // Corrigido para Date
       },
-      Desc: {
+      desc: {
         type: String,
       },
     });

@@ -6,8 +6,9 @@ const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://four-work.vercel.app'],
 };
+
 
 
 router.use(cors(corsOptions));
@@ -18,7 +19,14 @@ router.post(`/gestaoatv`, async function (req, res) {
     console.log('Recebendo dados do formulário:', req.body);
 
     const { codigo, ...outrosDados } = req.body;
-    
+
+    // Verificar se o código RAT já existe no banco de dados
+    const codigoExistente = await CadastroApontamento.findOne({ RAT: outrosDados.RAT });
+    if (codigoExistente) {
+      console.error('Código RAT já existe no banco de dados:', outrosDados.RAT);
+      return res.status(400).json({ erro: 'Código RAT já existe no banco de dados.' }).end();
+    }
+
     console.log('Dados a serem inseridos no banco de dados:', { ...outrosDados, codigo });
 
     const retorno = await crud('CadastroApontamento', { ...outrosDados, codigo }, 'lastCode');
@@ -62,5 +70,25 @@ router.delete('/gestaoatv/:id', authenticateToken, async (req, res) => {
   }
 });
 
+router.get('/gestaoatv/:codigoRAT', async (req, res) => {
+  try {
+    const codigoRAT = req.params.codigoRAT;
+
+    // Verificar se o código RAT já existe no banco de dados
+    const codigoExistente = await CadastroApontamento.findOne({ RAT: codigoRAT });
+
+    if (codigoExistente) {
+      // Se o código RAT existe, retornar um status 200 com um objeto indicando que o código existe
+      res.status(200).json({ existe: true });
+    } else {
+      // Se o código RAT não existe, retornar um status 404 com um objeto indicando que o código não existe
+      res.status(200).json({ existe: false });
+    }
+  } catch (err) {
+    console.error('Erro ao verificar existência do código RAT:', err);
+    // Se houver um erro, retornar um status 500 com uma mensagem de erro
+    res.status(500).json({ erro: 'Erro ao verificar existência do código RAT' });
+  }
+});
 
 module.exports = router;

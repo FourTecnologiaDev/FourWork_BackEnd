@@ -9,7 +9,14 @@ function mongoSchemaCadastroP() {
       codigo: {
         type: String,
       },
-      Nome: {
+      codigoCliente: {
+        type: String,
+        require: false,
+      },
+      nomePessoa: {
+        type: String, // Corrigindo para String
+      },
+      nomeCliente: {
         type: String, // Corrigindo para String
       },
       Email: {
@@ -19,12 +26,10 @@ function mongoSchemaCadastroP() {
         type: String,
       },     
       CNPJ: {
-        type: String,
-        required: true,
+        type: String,  
       },
-      CPF: {
+      cep: {
         type: String,
-        required: true,
       }, 
       ValorH: {
         type: String,
