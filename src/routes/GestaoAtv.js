@@ -6,9 +6,8 @@ const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://four-work.vercel.app'],
+  origin: 'https://four-work.vercel.app',
 };
-
 
 
 router.use(cors(corsOptions));
