@@ -5,12 +5,8 @@ const CadastroApontamento = require('../schema/cadApont')();
 const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 
-const corsOptions = {
-  origin: 'https://four-work.vercel.app',
-};
+router.use(cors());
 
-
-router.use(cors(corsOptions));
 
 
 router.post(`/gestaoatv`, async function (req, res) {
