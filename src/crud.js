@@ -114,7 +114,7 @@ async function crud(tabela, registro, operacao) {
 
     // Busca login
     if(operacao == 'authenticate'){
-        resultado = modelo.find({"email": registro.email, "password": registro.password});        
+        resultado = modelo.find({"email": registro.email, "senha": registro.senha});        
     }
 
     // Cria usuario

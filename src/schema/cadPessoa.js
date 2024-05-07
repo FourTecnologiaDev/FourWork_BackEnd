@@ -19,13 +19,16 @@ function mongoSchemaCadastroP() {
       nomeCliente: {
         type: String, // Corrigindo para String
       },
-      Email: {
+      email: {
         type: String, // Corrigindo para String
       },
-      Senha: {
+      senha: {
         type: String,
       },     
       CNPJ: {
+        type: String,  
+      },
+      CPF: {
         type: String,  
       },
       cep: {
@@ -37,9 +40,6 @@ function mongoSchemaCadastroP() {
       TipoPessoa: {
         type: String,
       }, 
-      CEP: {
-        type: String, // Corrigindo para String
-      },
       Endereço: {
         type: String,
       },

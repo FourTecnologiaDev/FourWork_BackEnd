@@ -7,8 +7,6 @@ const authenticateToken = require('../authenticate/authenticateToken')
 
 router.use(cors());
 
-
-
 router.post(`/gestaoatv`, async function (req, res) {
   try {
     console.log('Recebendo dados do formulário:', req.body);
