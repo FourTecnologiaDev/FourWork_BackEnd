@@ -6,7 +6,7 @@ const cors = require('cors');
 
 
 const mongoSchemaCadastro = require ("./src/schema/cadApont")
-const mongoSchemaCadastroP = require("./src/schema/CadPessoa")
+const mongoSchemaCadastroP = require("./src/schema/Cadastro")
 const mongoSchemaLogin = require ("./src/schema/login")
 
 require("dotenv").config();  
