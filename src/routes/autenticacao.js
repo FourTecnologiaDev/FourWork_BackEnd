@@ -3,6 +3,10 @@ const router = express.Router();
 const crud = require("../crud");
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const cors = require('cors');
+
+router.use(cors());
+
 
 router.post("/autenticacao", async function (req, res) {
     try{
