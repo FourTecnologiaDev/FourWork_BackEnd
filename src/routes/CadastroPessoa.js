@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const CadastroPessoa = require('../schema/CadPessoa')(); 
+const CadastroPessoa = require('../schema/CadPessoa'); 
 const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 

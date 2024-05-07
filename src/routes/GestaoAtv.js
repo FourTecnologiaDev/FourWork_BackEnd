@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const CadastroApontamento = require('../schema/cadApont')(); 
+const CadastroApontamento = require('../schema/cadApont'); 
 const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
 
