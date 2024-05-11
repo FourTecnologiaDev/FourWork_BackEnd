@@ -3,11 +3,8 @@ const router = express.Router();
 const cors = require('cors');
 const crud = require("../crud");
 
-const corsOptions = {
-  origin: 'http://localhost:5173',
-};
 
-router.use(cors(corsOptions));
+router.use(cors());
 
 router
   .post('/cadPessoa', async (req, res) => {

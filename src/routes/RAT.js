@@ -5,11 +5,8 @@ const multer = require('multer'); // Importar multer para processar formulários
 const mongoSchemaCadastro = require('../schema/cadRat')();
 const crud = require("../crud");
 
-const corsOptions = {
-  origin: 'http://localhost:5173', // Substitua pelo domínio da sua aplicação
-};
 
-router.use(cors(corsOptions));
+router.use(cors());
 
 // Configurar multer para processar o formulário e armazenar o arquivo em memória
 const storage = multer.memoryStorage();
