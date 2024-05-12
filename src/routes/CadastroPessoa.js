@@ -13,6 +13,7 @@ router
     try {
       await crud('cadastrousuario', outrasInformacoes, 'insert');
       res.json({ resultado: "Inserido com sucesso." }).end();
+  
     } catch (err) {
       res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
     }

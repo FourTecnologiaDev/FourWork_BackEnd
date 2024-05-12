@@ -22,7 +22,7 @@ function mongoSchemaCadastroP() {
       email: {
         type: String, // Corrigindo para String
       },
-      senha: {
+      password: {
         type: String,
       },     
       CNPJ: {

@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const CadastroApontamento = require('../schema/cadApont'); 
+const CadastroApontamento = require('../schema/cadApont')
 const crud = require("../crud");
 const authenticateToken = require('../authenticate/authenticateToken')
-
+const mongoSchemaCadastro = require('../schema/cadApont')
 router.use(cors());
 
 router.post(`/gestaoatv`, async function (req, res) {
   try {
     console.log('Recebendo dados do formulário:', req.body);
-
+    const CadastroApontamento = mongoSchemaCadastro();
     const { codigo, ...outrosDados } = req.body;
 
     // Verificar se o código RAT já existe no banco de dados
@@ -28,12 +28,14 @@ router.post(`/gestaoatv`, async function (req, res) {
     await crud('CadastroApontamento', { ...outrosDados, codigo }, 'insert');
     console.log('Dados inseridos com sucesso.');
 
-    res.json({ resultado: "Inserido com sucesso." }).end();
+    // Após a conclusão de todas as operações, realizar o redirecionamento
+  
   } catch (err) {
     console.error('Erro ao inserir dados no banco de dados:', err);
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
+
 
 
 router.get(`/gestaoatv`, async function (req, res) {
@@ -65,6 +67,7 @@ router.delete('/gestaoatv/:id', authenticateToken, async (req, res) => {
 
 router.get('/gestaoatv/:codigoRAT', async (req, res) => {
   try {
+    const CadastroApontamento = mongoSchemaCadastro();
     const codigoRAT = req.params.codigoRAT;
 
     // Verificar se o código RAT já existe no banco de dados

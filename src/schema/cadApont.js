@@ -18,7 +18,7 @@ function mongoSchemaCadastro() {
       },
       nomePessoa: {
         type: String,
-      },     
+      },        
       Email: {
         type: String,
       },     
