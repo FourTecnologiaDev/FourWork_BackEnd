@@ -28,14 +28,12 @@ router.post(`/gestaoatv`, async function (req, res) {
     await crud('CadastroApontamento', { ...outrosDados, codigo }, 'insert');
     console.log('Dados inseridos com sucesso.');
 
-    // Após a conclusão de todas as operações, realizar o redirecionamento
-  
+    res.json({ resultado: "Inserido com sucesso." }).end();
   } catch (err) {
     console.error('Erro ao inserir dados no banco de dados:', err);
     res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
   }
 });
-
 
 
 router.get(`/gestaoatv`, async function (req, res) {
