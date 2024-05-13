@@ -3,6 +3,7 @@ const router = express.Router();
 const cors = require('cors');
 const crud = require("../crud");
 const hashPassword = require("../authenticate/cripto");
+
 router.use(cors());
 
 router
@@ -10,16 +11,28 @@ router
     const { tipoPessoaSelecionado, ...outrasInformacoes } = req.body;
     
     try {
-      let plainPassword = req.body.password;
-      const hash = await hashPassword(plainPassword);
-      req.body.password = hash;
-      console.log("Senha Hash:", hash);
       await crud('cadastrousuario', outrasInformacoes, 'insert');
       res.json({ resultado: "Inserido com sucesso." }).end();
   
     } catch (err) {
       res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
     }
+
+    try {
+      let plainPassword = req.body.password;
+      const hash = await hashPassword(plainPassword);
+      req.body.password = hash;
+      console.log("Senha Hash:", hash);
+  
+      retorno = await crud("cadastrousuario", req.body, "newUser");
+      res.send(retorno).end();
+    } catch (err) {
+      res
+        .status(500)
+        .json({ retorno: `Algo deu errado!, erro: ${err}` })
+        .end();
+    }
+
   })
   .get(`/cadPessoa`, async function (req, res) {
     try{
