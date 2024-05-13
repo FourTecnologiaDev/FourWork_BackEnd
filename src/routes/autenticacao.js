@@ -15,7 +15,7 @@ router.post("/autenticacao", async function (req, res) {
       let match
       let authenticate = false
       if(req.body.email && req.body.password)
-        retorno = await crud('', req.body, 'authenticate');
+        retorno = await crud('cadastrousuario', req.body, 'authenticate');
         if(retorno)
           authenticate = (retorno.length == 0 ? false : true)
 
