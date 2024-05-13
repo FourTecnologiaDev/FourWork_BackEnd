@@ -6,7 +6,7 @@ const cors = require('cors');
 
 router.use(cors());
 
-router.post("/novoUsuario", async function (req, res) {
+router.post("/cadPessoa", async function (req, res) {
   try {
     let plainPassword = req.body.password;
     const hash = await hashPassword(plainPassword);
