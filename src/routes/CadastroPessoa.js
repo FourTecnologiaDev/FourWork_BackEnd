@@ -8,31 +8,25 @@ router.use(cors());
 
 router
   .post('/cadPessoa', async (req, res) => {
-    const { tipoPessoaSelecionado, ...outrasInformacoes } = req.body;
-    
     try {
-      await crud('cadastrousuario', outrasInformacoes, 'insert');
-      res.json({ resultado: "Inserido com sucesso." }).end();
-  
-    } catch (err) {
-      res.status(500).json({ retorno: `Algo deu errado!, erro: ${err}` }).end();
-    }
+      // Extrai as informações do corpo da solicitação
+      const { tipoPessoaSelecionado, ...outrasInformacoes } = req.body;
 
-    try {
+      // Gera o hash da senha
       let plainPassword = req.body.password;
       const hash = await hashPassword(plainPassword);
       req.body.password = hash;
       console.log("Senha Hash:", hash);
-  
-      retorno = await crud("cadastrousuario", req.body, "newUser");
-      res.send(retorno).end();
-    } catch (err) {
-      res
-        .status(500)
-        .json({ retorno: `Algo deu errado!, erro: ${err}` })
-        .end();
-    }
 
+      // Insere as informações do usuário no banco de dados
+      await crud('cadastrousuario', outrasInformacoes, 'insert');
+
+      // Responde ao cliente com sucesso
+      res.json({ resultado: "Inserido com sucesso." }).end();
+    } catch (err) {
+      // Se ocorrer algum erro, responde ao cliente com o status 500 e uma mensagem de erro
+      res.status(500).json({ retorno: `Algo deu errado!, erro: ${err.message}` }).end();
+    }
   })
   .get(`/cadPessoa`, async function (req, res) {
     try{
