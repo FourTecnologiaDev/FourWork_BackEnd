@@ -3,6 +3,8 @@ const router = express.Router();
 const crud = require("../crud");
 const hashPassword = require("../authenticate/cripto");
 
+router.use(cors());
+
 router.post("/novoUsuario", async function (req, res) {
   try {
     let plainPassword = req.body.password;

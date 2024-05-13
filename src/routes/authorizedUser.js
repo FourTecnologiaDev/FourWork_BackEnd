@@ -4,15 +4,17 @@ const router = express.Router();
 
 // Rota para fornecer a lista de usuários autorizados
 router.post('/authorizedUsers', (req, res) => {
-  console.log(req.body)
-  if (req.body.email.includes('@fourtec.com.br')) {
+  console.log(req.body);
+  const authorizedEmail = 'renato.ricomini@fourtec.com.br';
+  
+  if (req.body.email === authorizedEmail) {
     res.json({
       isAuth: true
-    })
+    });
   } else {
     res.json({
       isAuth: false
-    })
+    });
   }
 });
 
