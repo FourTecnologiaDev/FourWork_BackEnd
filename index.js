@@ -7,13 +7,13 @@ const cors = require('cors');
 
 const mongoSchemaCadastro = require ("./src/schema/cadApont")
 const mongoSchemaCadastroP = require("./src/schema/Cadastro")
-const mongoSchemaLogin = require ("./src/schema/login")
+
 
 require("dotenv").config();  
 
 mongoSchemaCadastro();
 mongoSchemaCadastroP();
-mongoSchemaLogin();
+
 
 app.use(express.static('src'));
 app.use(cors()); 

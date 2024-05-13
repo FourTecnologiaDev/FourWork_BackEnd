@@ -3,8 +3,6 @@ const router = express.Router();
 bodyParser = require('body-parser');
 const authenticateToken = require('../authenticate/authenticateToken')
 const autenticacao = require('./autenticacao')
-const novoUsuario = require('./newUser')
-const rotasSimples = require('./rotasSimples')
 const gestaoatv = require('./GestaoAtv')
 const authorizedUsers = require('./authorizedUser')
 const cadastroRAT = require('./RAT')
@@ -14,8 +12,6 @@ const cadPessoa = require('./CadastroPessoa')
 router.use(bodyParser.json());
 
 router.route('/autenticacao').post(autenticacao)
-router.route('/novoUsuario').post(authenticateToken, novoUsuario)
-router.route('/login').all(authenticateToken, rotasSimples)
 router.route('/gestaoatv').all(authenticateToken, gestaoatv)
 router.route('/gestaoatv/:id').delete(authenticateToken, gestaoatv)
 router.route('/authorizedUsers').all(authenticateToken, authorizedUsers)

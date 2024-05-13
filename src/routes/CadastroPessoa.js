@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const crud = require("../crud");
-
+const hashPassword = require("../authenticate/cripto");
 router.use(cors());
 
 router
@@ -10,6 +10,10 @@ router
     const { tipoPessoaSelecionado, ...outrasInformacoes } = req.body;
     
     try {
+      let plainPassword = req.body.password;
+      const hash = await hashPassword(plainPassword);
+      req.body.password = hash;
+      console.log("Senha Hash:", hash);
       await crud('cadastrousuario', outrasInformacoes, 'insert');
       res.json({ resultado: "Inserido com sucesso." }).end();
   
