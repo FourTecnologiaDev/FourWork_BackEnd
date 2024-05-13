@@ -3,7 +3,6 @@ const router = express.Router();
 const cors = require('cors');
 const crud = require("../crud");
 
-
 router.use(cors());
 
 router
