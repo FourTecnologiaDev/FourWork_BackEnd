@@ -19,7 +19,7 @@ router
       console.log("Senha Hash:", hash);
 
       // Insere as informações do usuário no banco de dados
-      await crud('cadastrousuario', outrasInformacoes, 'insert');
+      await crud('cadastrousuario', req.body, 'insert');
 
       // Responde ao cliente com sucesso
       res.json({ resultado: "Inserido com sucesso." }).end();
